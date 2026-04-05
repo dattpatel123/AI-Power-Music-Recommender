@@ -18,7 +18,7 @@ Replace this paragraph with your own summary of what your version does.
 ## How The System Works
 
 Explain your design in plain language.
-
+Real world systems use collaborative, content based, or hybrid. Collaborative uses user interaction data to find others who played songs with similar taste. Content-based uses attributes of the song itself to find other similar ones. Hybrid is a mix of the two. My system will be content-based since we are only given song data. The system will use the numerical and categorical features of the song to recommend songs. We will do a content-based filtering to help recommened songs based on the user preferences and the song metadata. UserProfile stores information about their preferences like genre, mood, energy, tempo, valence, dancebility, etc. Then the system will find a similarity score between that preference and all the songs in the playlist, giving a similarity score for all songs. Then we rank the scores from greatest to lowest, to recommend the most similar songs first. The similarity score will be calcululated using euclidean distance and using a weight importance for each feature. Then we will caluculate distance between each feature and the prefernce and multiply by weight of feature then add it up to find similarity score. Numerical feature will use a euclidean distance. Categorical will use Hamming to find proportion of mismatch between the two items. 
 Some prompts to answer:
 
 - What features does each `Song` use in your system
