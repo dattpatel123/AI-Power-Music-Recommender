@@ -75,6 +75,11 @@ Use this section to document the experiments you ran. For example:
 - How did your system behave for different types of users
 - I tested basic profiles like High-Energy Pop and Chill-Lofi, which resulted in highly scored songs. This is because the genres/moods matched, and the other values were also very similar. The other thing I tested was high-energy moody using high energy and high valence while being sad/moody. And still it gives me moody songs because the genre/moods match, despite the varying similarity in the valence/energy. For Jazz, but Loud profile with high energy, we got songs that mary both genre and mood, ignoring how dissimilar the energy and tempo are. 
 
+![Alt text](images/cli_output.png)
+![Alt text](images/test_output1.png)
+![Alt text](images/test_output2.png)
+
+
 ---
 
 ## Limitations and Risks
