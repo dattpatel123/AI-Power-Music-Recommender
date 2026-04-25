@@ -1,109 +1,134 @@
-# 🎵 Music Recommender Simulation
+# Agentic Music Recommender
 
-## Project Summary
-
-In this project you will build and explain a small music recommender system.
-
-Your goal is to:
-
-- Represent songs and a user "taste profile" as data
-- Design a scoring rule that turns that data into recommendations
-- Evaluate what your system gets right and wrong
-- Reflect on how this mirrors real world AI recommenders
-- This project is a content-based music recommender built in Python. Given a user preference profile (genre, mood, energy, tempo, valence, danceability, acousticness), it scores every song in a catalog against those preferences and returns the top matches. Categorical features (genre, mood) are compared as exact matches, while numerical features are normalized and scored by closeness. Genre is weighted most heavily (2 pts) to reflect how strongly people identify with a genre, followed by mood (1.5 pts), then energy/tempo/valence (1 pt each), and finally danceability/acousticness (0.5 pts each). The system was tested against several user profiles — including adversarial cases like mismatched energy/mood combinations and genres absent from the catalog — to expose edge cases in the scoring logic.
+A full agentic AI system that takes a natural language description of what you want to hear, builds a structured preference profile using an LLM, matches it against a 81k+ unique song Spotify dataset, and explains why each result fits — all in a Streamlit interface.
 
 ---
 
-## How The System Works
+## Original Project
 
-Explain your design in plain language.
-
-
-Some prompts to answer:
-
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
-- You can include a simple diagram or bullet list if helpful.
-- Real world systems use collaborative, content based, or hybrid. Collaborative uses user interaction data to find others who played songs with similar taste. Content-based uses attributes of the song itself to find other similar ones. Hybrid is a mix of the two. My system will be content-based since we are only given song data. The system will use the numerical and categorical features of the song to recommend songs. We will do a content-based filtering to help recommened songs based on the user preferences and the song metadata. UserProfile stores information about their preferences like genre, mood, energy, tempo, valence, dancebility, etc. Then the system will find a similarity score between that preference and all the songs in the playlist, giving a similarity score for all songs. Then we rank the scores from greatest to lowest, to recommend the most similar songs first. We use a points based weight system where genre match= 2points, mood match=1.5 point, energy=1 point, tempo=1 point, valence=1 point, dance=0.5, acoustic=0.5. Similarity Score = (2 * genre_match) + (1.5 * mood_match) + (1 * energy_similarity) + (1 * tempo_similarity) + (1 * valence_similarity) + (0.5 * dance_similarity) + (0.5 * acoustic_similarity) where categorical values can just be 1 or 0 if they match of now, the numerical values and normalized then we calculate similarity by doing 1-abs(user i - song i) for feature i. Bias is introduced in that we genre the most, and also we don't considered artist. 
+This project extends **Music Recommender Simulation** (Modules 1–3), a content-based recommender built in Python. The original system represented user taste as a hand-coded preference dictionary (genre, mood, energy, tempo, valence, danceability, acousticness) and scored songs against it using a fixed weighted formula. It ran entirely from the command line against a small 20-song CSV catalog and had no LLM integration, no natural language input, no explanation layer, and it didn't have dynamic feature and feature weight inference.
 
 ---
 
-## Getting Started
+## What This Project Does and Why It Matters
 
-### Setup
+Most music recommenders are black boxes — they surface results but never say why. This system is different: it lets users describe what they want in plain language, intelligently infers their audio preferences using a two-step LLM pipeline, matches those preferences against real Spotify track data, and then explains each recommendation in conversational terms.
 
-1. Create a virtual environment (optional but recommended):
+It demonstrates how LLMs can act as structured reasoning agents — not just chatbots — by parsing unstructured input, extracting entities, inferring numeric feature values, and producing validated, machine-readable output that feeds directly into a deterministic scoring engine.
 
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate      # Mac or Linux
-   .venv\Scripts\activate         # Windows
+---
 
-2. Install dependencies
+## Architecture Overview
+
+![System Diagram][assets/music_recommender_system_diagram_v3.svg]
+---
+
+## Setup Instructions
+
+### 1. Clone and install dependencies
 
 ```bash
+git clone <repo-url>
+cd applied-ai-system-final
+python -m venv .venv
+source .venv/bin/activate        # Mac/Linux
+# .venv\Scripts\activate         # Windows
 pip install -r requirements.txt
 ```
 
-3. Run the app:
+### 2. Download the dataset
 
-```bash
-python -m src.main
+Download the **Spotify Tracks Dataset** by Maharshi Pandya from Kaggle:
+[kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset)
+
+Place the CSV at:
+```
+data/spotify_tracks.csv
 ```
 
-### Running Tests
+### 3. Set your API key
 
-Run the starter tests with:
-
-```bash
-pytest
+Create a `.env` file in the project root:
+```
+GEMINI_API_KEY = your_key_here
+GEMINI_MODEL = gemini-3-flash-preview
 ```
 
-You can add more tests in `tests/test_recommender.py`.
+Get a free Gemini API key at [aistudio.google.com](https://aistudio.google.com).
 
----
+### 4. Run the Streamlit app
 
-## Experiments You Tried
+```bash
+python -m streamlit run app.py
+```
 
-Use this section to document the experiments you ran. For example:
-
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
-- I tested basic profiles like High-Energy Pop and Chill-Lofi, which resulted in highly scored songs. This is because the genres/moods matched, and the other values were also very similar. The other thing I tested was high-energy moody using high energy and high valence while being sad/moody. And still it gives me moody songs because the genre/moods match, despite the varying similarity in the valence/energy. For Jazz, but Loud profile with high energy, we got songs that mary both genre and mood, ignoring how dissimilar the energy and tempo are. 
-
-![Alt text](images/cli_output.png)
-![Alt text](images/test_output1.png)
-![Alt text](images/test_output2.png)
 
 
 ---
 
-## Limitations and Risks
+## Sample Interactions (Images)
 
-Summarize some limitations of your recommender.
+### Example 1 — Descriptive text only
 
-Examples:
 
-- It only works on a tiny catalog
-- It does not understand lyrics or language
-- It might over favor one genre or mood
-- You will go deeper on this in your model card.
-- The system prioritizes genre and mood. This menans even if there is alternating in the mood/genre over the other numerical features, the system will prioritize genre/mood even if the energy might be giving conflicting information. Another limitation is the small dataset. The dataset is not diverse nor is it extensive, so even if no song is close to user preference, it will still recommend it because we need k songs. We need a diverse dataset that covers all the various possible values of features. 
+---
+
+### Example 2 — Song references only
+
+---
+
+### Example 3 — Mixed input (text + songs)
+
+---
+
+## Design Decisions
+
+**Why deduplication?**
+The dataset contained duplicate rows for the same song due to the song being in multiple albums and in multiple genres. I deduplicated it so the most popular row per song stays. The tradeoff is we lose other genres or albums. Albums isn't an issue, but we lose off on the other genres. This could be handled by combined all genres into one, but I chose to leave it for now. 
+
+**Why vectorized pandas scoring instead of a loop?**
+The dataset has 81k+ rows after deduplication. Row-by-row scoring in Python would take several seconds. Vectorized operations run in under 100ms. This allows for easy feature_weight * difference multiplication across all columns quickly. 
+
+
+**Why floor genre weight at 0.5?**
+The dataset is heavily skewed toward Indian pop and bhangra. Without a genre floor, some songs of very similar tastes would consistently outscore everything else based on pure audio features alone. The 0.5 floor ensures genre remains a meaningful filter regardless of what the LLM assigns.
+
+**Why artist diversity enforcement?**
+Early testing showed the top 5 could easily be 3–4 songs from one prolific artist (e.g. Drake, Taylor Swift) when their catalog closely matched the profile. Enforcing one song per artist makes results more useful and surprising.
+
+**Trade-offs:**
+- Deduplication by `track_id` then `(track_name, artists)` means a song keeps its most-popular genre tag, which may not be the most accurate for niche releases
+- The genre floor of 0.5 slightly penalizes profiles where genre genuinely shouldn't matter (e.g. pure instrumental searches), though `match_genre()` zeroes the weight entirely when no genre is identified, but this allows for more emphasis on a specific genre where present
+- Two LLM calls per request adds latency, but the separates the profile building from the explanation step
+
+---
+
+## Testing Summary
+
+**What worked:**
+- The program works. We can pass in song descriptions and example songs and it gives recommendations. 
+- Guardrails are present in case of issues of response from the LLM. However, this didn't present an issue so far, likely due to passing in feature infomation and JSON schema directly into each prompt so the LLM already knows what to provide, but the clamping is there as a safety measure. 
+- Genre weight flooring visibly improved result diversity
+- Deduplicating removed the duplicates
+- The artist diversity filter eliminated repeated artists from the top 5 in all test cases
+- Logging works and any issue or success is properly logged inside logs/
+
+
+
+**What didn't work / required iteration:**
+- It required some planning and iterations to perfect how to build the profile, specifically how to handle general descriptions vs example songs vs blend of both. I had to work with the LLM to decide how we wanted it to infer the importance of the various features and how to assign the target values when creating the User Profile. 
+- Without the genre weight floor, results were dominated by Indian pop (dataset bias), which wasn't obvious until testing with English-language prompts
+- Relative imports broke when switching between `python3 src/main.py` and `python -m src.main` — required `__init__.py` and consistent use of `python -m`
+- The artist field uses `;` as a separator for collaborations — the initial exact-string artist dedup check missed this, allowing the same artist to appear twice under different featured-artist strings
+
+**What I learned:**
+- Dataset quality and bias matter as much as algorithm design; a beautifully tuned scorer is useless if the data it runs on is skewed
+- Separating concerns (extract → validate → score → explain) made it easy to go step by step and ensure each component works before moving to next
+- Using LLM to research, create a plan, create phases to execute plan, and then execute the plan in phases.
+- AI is a powerful tool and can do a lot of heavy lifting and coding, but it does require human guidance. It may be able to do a lot, but can easily make small bugs or forget something. I learned to guide it as needed and supervising it while it wrote, which made it very efficient to complete this project. 
+
 ---
 
 ## Reflection
 
-Read and complete `model_card.md`:
-
-[**Model Card**](model_card.md)
-
-Write 1 to 2 paragraphs here about what you learned:
-
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
-- I learned about the different ways recommendor systems are developed: collaborative, content-based, or hybrid. I learned how complex these systems can get because of how many different possibilities there are with song features and the values of those features, and the need for a large and diverse dataset. I definitely think recommendation is a very complex task that utilizes many different features and lots of thorough testing and fine-tuning to improve. 
-
+Building this project changed how I think about where LLMs fit in a system. It was truly a powerful tool. It let me research, create a plan, create phases to execute plan, and then execute the plan in phases. But AI is a powerful tool and can do a lot of heavy lifting and coding, but it does require human guidance. It may be able to do a lot, but can easily make small bugs or forget something. I learned to guide it as needed and supervising it while it wrote, which made it very efficient to complete this project. It also needs context and information and the more detailed you are, the better it can be at doing what you need it to do. It doesn't know your dataset until you tell it how it's built. It is a really good planner but only if you properly guide it. One shotting is a terrible idea especially if you don't know how to go about the project. 

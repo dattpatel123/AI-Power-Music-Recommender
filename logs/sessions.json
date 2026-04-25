@@ -141,5 +141,118 @@
       "This track has a very slow tempo and low energy, creating a smooth but lonely sound that fits your request perfectly. The low valence ensures a sad, soulful feel that fans of emotional ballads will really appreciate."
     ],
     "timestamp": "2026-04-25T20:31:59.385887+00:00"
+  },
+  {
+    "user_text": "Something sad and slow for a sad rainy night",
+    "example_songs": "Another love, someone to you,",
+    "profile": {
+      "favorite_genre": "chill",
+      "feature_weights": {
+        "genre": 0.8,
+        "energy": 0.8,
+        "tempo": 0.9,
+        "valence": 0.9,
+        "danceability": 0.8,
+        "acousticness": 0.6,
+        "speechiness": 0.9,
+        "instrumentalness": 0.9,
+        "liveness": 0.4,
+        "loudness": 0.6,
+        "mode": 0.7
+      },
+      "target_energy": 0.438,
+      "target_tempo_bpm": 81.55,
+      "target_valence": 0.276
+    },
+    "results": [
+      {
+        "track_name": "Can't Pretend",
+        "artists": "Tom Odell",
+        "track_genre": "chill",
+        "score": 100.0,
+        "energy": 0.473,
+        "tempo": 79.1,
+        "valence": 0.286,
+        "danceability": 0.468,
+        "acousticness": 0.278,
+        "speechiness": 0.0281,
+        "instrumentalness": 0.0006,
+        "liveness": 0.117,
+        "loudness": -8.5,
+        "mode": 0
+      },
+      {
+        "track_name": "Why You",
+        "artists": "Sway Bleu",
+        "track_genre": "chill",
+        "score": 99.79,
+        "energy": 0.53,
+        "tempo": 93.3,
+        "valence": 0.209,
+        "danceability": 0.422,
+        "acousticness": 0.528,
+        "speechiness": 0.123,
+        "instrumentalness": 0.0004,
+        "liveness": 0.0899,
+        "loudness": -10.99,
+        "mode": 0
+      },
+      {
+        "track_name": "Alive",
+        "artists": "Audrey Mika",
+        "track_genre": "chill",
+        "score": 98.74,
+        "energy": 0.335,
+        "tempo": 86.4,
+        "valence": 0.293,
+        "danceability": 0.591,
+        "acousticness": 0.601,
+        "speechiness": 0.0339,
+        "instrumentalness": 0.0,
+        "liveness": 0.0976,
+        "loudness": -8.33,
+        "mode": 0
+      },
+      {
+        "track_name": "Collide (Sped Up Remix)",
+        "artists": "Justine Skye;Tyga",
+        "track_genre": "chill",
+        "score": 98.64,
+        "energy": 0.432,
+        "tempo": 81.3,
+        "valence": 0.256,
+        "danceability": 0.362,
+        "acousticness": 0.0882,
+        "speechiness": 0.112,
+        "instrumentalness": 0.0,
+        "liveness": 0.264,
+        "loudness": -9.36,
+        "mode": 0
+      },
+      {
+        "track_name": "Lights Out",
+        "artists": "Nbdy",
+        "track_genre": "chill",
+        "score": 98.52,
+        "energy": 0.43,
+        "tempo": 90.0,
+        "valence": 0.156,
+        "danceability": 0.57,
+        "acousticness": 0.334,
+        "speechiness": 0.037,
+        "instrumentalness": 0.0,
+        "liveness": 0.111,
+        "loudness": -10.94,
+        "mode": 0
+      }
+    ],
+    "explanations": [
+      "Since you're a fan of Tom Odell, this track's slow tempo and somber minor key will feel very familiar and fitting for a rainy night. The low valence ensures the mood stays consistently melancholy and reflective.",
+      "This song has a very low valence and soft volume, creating an intimate, sad atmosphere that matches your request perfectly. The minor key adds a layer of emotional weight that's ideal for a quiet night.",
+      "The high acousticness and low energy of this track give it a raw, stripped-back feel that is great for a slow-paced evening. It captures a gentle sadness that won't feel too fast or intense.",
+      "Even as a remix, this version maintains a low danceability and a sadder tone that keeps it from feeling too energetic. Its slow tempo makes it a solid choice for a brooding, rainy playlist.",
+      "This track has a particularly low valence, making it one of the saddest sounding recommendations for your list. Its low energy and hushed loudness help create a somber environment perfect for staying indoors."
+    ],
+    "timestamp": "2026-04-25T21:06:10.730618+00:00"
   }
 ]
