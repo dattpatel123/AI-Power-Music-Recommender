@@ -1,4 +1,4 @@
-# Agentic Music Recommender
+# Agentic Music Recommender System
 
 A full agentic AI system that takes a natural language description of what you want to hear, builds a structured preference profile using an LLM, matches it against a 81k+ unique song Spotify dataset, and explains why each result fits — all in a Streamlit interface.
 
