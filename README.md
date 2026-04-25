@@ -20,7 +20,7 @@ It demonstrates how LLMs can act as structured reasoning agents — not just cha
 
 ## Architecture Overview
 
-![System Diagram][assets/music_recommender_system_diagram_v3.svg]
+![System Diagram](assets/music_recommender_system_diagram_v3.svg)
 ---
 
 ## Setup Instructions
