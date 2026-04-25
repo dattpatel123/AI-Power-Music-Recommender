@@ -5,8 +5,8 @@ Clamping is always silent (no exception raised).
 Every clamp is logged via logger.py.
 Missing required fields raise a ValueError immediately for Streamlit to display.
 """
-from src.logger import log_event
-from src.recommender import UserProfile
+from logger import log_event
+from recommender import UserProfile
 
 # ---------------------------------------------------------------------------
 # Field definitions
@@ -87,11 +87,14 @@ def _apply_clamps(raw: dict) -> dict:
         log_event("clamp", {"field": "target_mode", "original": original, "clamped": clamped_mode})
     out["target_mode"] = clamped_mode
 
-    # feature_weights: each value clamped to [0, 1]
+    # feature_weights: each value clamped to [0, 1].
+    # Genre weight has a minimum floor of 0.5 to prevent dataset bias
+    # (e.g. over-represented genres dominating purely on audio features).
     weights = dict(out["feature_weights"])
     for key in _WEIGHT_KEYS:
+        lo = 0.5 if key == "genre" else 0.0
         original_w = weights[key]
-        clamped_w = _clamp(float(original_w), 0.0, 1.0)
+        clamped_w = _clamp(float(original_w), lo, 1.0)
         if clamped_w != float(original_w):
             log_event("clamp", {
                 "field": f"feature_weights.{key}",

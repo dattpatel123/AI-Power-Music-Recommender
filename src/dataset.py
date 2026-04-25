@@ -7,7 +7,16 @@ import pandas as pd
 _DATA_PATH = Path(__file__).parent.parent / "data" / "spotify_tracks.csv"
 
 try:
-    _df = pd.read_csv(_DATA_PATH)
+    _raw = pd.read_csv(_DATA_PATH)
+    # Two dedup passes, both keeping the highest-popularity row:
+    # 1. track_id       — same recording duplicated across genres/playlists
+    # 2. (track_name, artists) — same song with different album entries and IDs
+    _df = (
+        _raw.sort_values("popularity", ascending=False)
+            .drop_duplicates(subset=["track_id"])
+            .drop_duplicates(subset=["track_name", "artists"])
+            .reset_index(drop=True)
+    )
     _genres: list[str] = _df["track_genre"].unique().tolist()
 except FileNotFoundError:
     raise FileNotFoundError(
