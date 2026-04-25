@@ -28,5 +28,118 @@
     "reason": "explainer_call_failed",
     "detail": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\\nPlease retry in 2.087622167s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '2s'}]}}",
     "timestamp": "2026-04-25T18:08:57.915566+00:00"
+  },
+  {
+    "user_text": "Something sad and slow for a sad rainy night",
+    "example_songs": "Another love, someone to you,",
+    "profile": {
+      "favorite_genre": "chill",
+      "feature_weights": {
+        "genre": 0.7,
+        "energy": 0.9,
+        "tempo": 0.9,
+        "valence": 0.95,
+        "danceability": 0.8,
+        "acousticness": 0.4,
+        "speechiness": 0.6,
+        "instrumentalness": 0.3,
+        "liveness": 0.2,
+        "loudness": 0.5,
+        "mode": 0.7
+      },
+      "target_energy": 0.408,
+      "target_tempo_bpm": 81.551,
+      "target_valence": 0.2766
+    },
+    "results": [
+      {
+        "track_name": "Atlantis (Sped Up)",
+        "artists": "fenekot",
+        "track_genre": "chill",
+        "score": 100.0,
+        "energy": 0.406,
+        "tempo": 85.2,
+        "valence": 0.281,
+        "danceability": 0.402,
+        "acousticness": 0.702,
+        "speechiness": 0.134,
+        "instrumentalness": 0.262,
+        "liveness": 0.131,
+        "loudness": -9.66,
+        "mode": 0
+      },
+      {
+        "track_name": "Can't Pretend",
+        "artists": "Tom Odell",
+        "track_genre": "chill",
+        "score": 99.49,
+        "energy": 0.473,
+        "tempo": 79.1,
+        "valence": 0.286,
+        "danceability": 0.468,
+        "acousticness": 0.278,
+        "speechiness": 0.0281,
+        "instrumentalness": 0.0006,
+        "liveness": 0.117,
+        "loudness": -8.5,
+        "mode": 0
+      },
+      {
+        "track_name": "Collide (Sped Up Remix)",
+        "artists": "Justine Skye;Tyga",
+        "track_genre": "chill",
+        "score": 99.45,
+        "energy": 0.432,
+        "tempo": 81.3,
+        "valence": 0.256,
+        "danceability": 0.362,
+        "acousticness": 0.0882,
+        "speechiness": 0.112,
+        "instrumentalness": 0.0,
+        "liveness": 0.264,
+        "loudness": -9.36,
+        "mode": 0
+      },
+      {
+        "track_name": "Why You",
+        "artists": "Sway Bleu",
+        "track_genre": "chill",
+        "score": 98.81,
+        "energy": 0.53,
+        "tempo": 93.3,
+        "valence": 0.209,
+        "danceability": 0.422,
+        "acousticness": 0.528,
+        "speechiness": 0.123,
+        "instrumentalness": 0.0004,
+        "liveness": 0.0899,
+        "loudness": -10.99,
+        "mode": 0
+      },
+      {
+        "track_name": "Out of the Blue",
+        "artists": "RINI",
+        "track_genre": "chill",
+        "score": 98.63,
+        "energy": 0.4,
+        "tempo": 79.0,
+        "valence": 0.227,
+        "danceability": 0.596,
+        "acousticness": 0.566,
+        "speechiness": 0.0284,
+        "instrumentalness": 0.0002,
+        "liveness": 0.29,
+        "loudness": -6.25,
+        "mode": 0
+      }
+    ],
+    "explanations": [
+      "This track captures a moody, melancholic vibe with its low valence and minor key, making it a perfect fit for a rainy night. Its high acousticness gives it an intimate, raw feel that matches the emotional depth you are looking for.",
+      "Since you enjoy Tom Odell, this song's slow pace and minor key deliver that same powerful, sad atmosphere found in his other work. The low energy makes it ideal for a quiet night spent reflecting indoors.",
+      "This song keeps the tempo slow and the valence very low, ensuring the mood stays somber and focused throughout. It has a mellow, chill energy that provides a gentle rhythm without breaking the sad, rainy day vibe.",
+      "With its incredibly low valence and strong acoustic presence, this song feels deeply personal and vulnerable. Its soft volume and subdued energy make it a great fit for a gloomy, slow-moving evening.",
+      "This track has a very slow tempo and low energy, creating a smooth but lonely sound that fits your request perfectly. The low valence ensures a sad, soulful feel that fans of emotional ballads will really appreciate."
+    ],
+    "timestamp": "2026-04-25T20:31:59.385887+00:00"
   }
 ]

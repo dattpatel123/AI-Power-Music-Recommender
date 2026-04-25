@@ -17,10 +17,10 @@ from pathlib import Path
 import google.genai as genai
 from dotenv import load_dotenv
 
-from dataset import get_song_features, match_genre
-from guardrails import validate_and_build
-from logger import log_event
-from recommender import UserProfile
+from .dataset import get_song_features, match_genre
+from .guardrails import validate_and_build
+from .logger import log_event
+from .recommender import UserProfile
 
 load_dotenv(Path(__file__).parent.parent / ".env")
 

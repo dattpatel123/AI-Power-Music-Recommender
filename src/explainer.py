@@ -11,7 +11,7 @@ from pathlib import Path
 import google.genai as genai
 from dotenv import load_dotenv
 
-from logger import log_event
+from .logger import log_event
 
 load_dotenv(Path(__file__).parent.parent / ".env")
 

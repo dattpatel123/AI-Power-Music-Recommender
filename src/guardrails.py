@@ -5,8 +5,8 @@ Clamping is always silent (no exception raised).
 Every clamp is logged via logger.py.
 Missing required fields raise a ValueError immediately for Streamlit to display.
 """
-from logger import log_event
-from recommender import UserProfile
+from .logger import log_event
+from .recommender import UserProfile
 
 # ---------------------------------------------------------------------------
 # Field definitions

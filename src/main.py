@@ -2,10 +2,10 @@
 End-to-end smoke test. Run from the project root:
     python -m src.main
 """
-from dataset import get_dataframe
-from profile_builder import build_profile
-from recommender import recommend
-from explainer import explain
+from .dataset import get_dataframe
+from .profile_builder import build_profile
+from .recommender import recommend
+from .explainer import explain
 import pandas as pd
 TEST_INPUT = "I want something energetic and upbeat to work out to, maybe something like Blinding Lights"
 
