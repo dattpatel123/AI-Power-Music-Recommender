@@ -28,3 +28,6 @@ logs/sessions.json
 .vscode/
 .idea/
 
+# Claude Code internal files
+.claude/
+
