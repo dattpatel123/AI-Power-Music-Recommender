@@ -10,9 +10,21 @@ venv/
 
 # OS files
 .DS_Store
+.DS_Store?
 
 # Pytest cache
 .pytest_cache/
 
+# Secrets
 .env
+
+# Dataset (too large for git)
+data/spotify_tracks.csv
+
+# Logs (runtime output, not source)
+logs/sessions.json
+
+# IDE
+.vscode/
+.idea/
 
