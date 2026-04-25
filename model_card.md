@@ -1,113 +1,40 @@
-# 🎧 Model Card: Music Recommender Simulation
-
-## 1. Model Name  
-
-Give your model a short, descriptive name.  
-Example: **VibeFinder 1.0**  
-
-**Music-Matcher**
+# Model Card: Agentic Music Recommender
 
 ---
 
-## 2. Intended Use  
+## Limitations and Biases
 
-Describe what your recommender is designed to do and who it is for. 
 
-Prompts:  
+A limitation is that deduplication forces each song into a single genre label (whichever genre its most-streamed album entry was tagged with on Spotify). A song that legitimately spans multiple genres — say, a track that is both "soul" and "r-n-b" — gets assigned one, which means users searching for one of those genres may miss it entirely.
 
-- What kind of recommendations does it generate  
-- What assumptions does it make about the user  
-- Is this for real users or classroom exploration  
-- The recommender is designed to help recommened songs to a user given the users preferences such as genre, mood, energy, valence, acousticness, tempo, dancebility. It will use a points based system where a genre match= 2 points, mood match=1.5 point, energy=1 point, tempo=1 point, valence=1 point, dance=0.5, acoustic=0.5. This is designed for classroom exploration as it is a basic prototype, but cannot be generalized as it's a small dataset. 
----
+The feature weights and the features are LLM-inferred. If the LLM has biases about what "energetic" or "chill" music sounds like culturally, those assumptions get baked into the profile without the user knowing. This is somewhat resolved by passing in 
 
-## 3. How the Model Works  
-
-Explain your scoring approach in simple language.  
-
-Prompts:  
-
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
-- Avoid code here. Pretend you are explaining the idea to a friend who does not program.
-- We calculate similarity between each song and user preference. To do so, for each song, we find the each feature similarity as the 1-abs(user_pref_feature_i - song_feature_i) for numerical and using 1 OR 0 for genre/mood match. Then each similarity is multiplied by a points based weight system where genre=2 points, mood=1.5 points, energy=1 points, tempo=1 point, valence=1 point, dance=0.5, acoustic=0.5. We sum over the the products and return the score. 
----
-
-## 4. Data  
-
-Describe the dataset the model uses.  
-
-Prompts:  
-
-- How many songs are in the catalog  
-- What genres or moods are represented  
-- Did you add or remove data  
-- Are there parts of musical taste missing in the dataset  
-- There are about 20 songs in the dataset. It represents pop, lofi, ambient, jazz, and some other singular songs in other genres. We have moody, happy, chill, relaxed, and more moods as well. I think the songs represented are diverse in moods and genres, but the frequency of them could be increased. Moreover, we can also increase the frequency of the different possible values of the numerical features like energy to get more diverse songs per mood and genre to better generalize for specific user preferences. 
----
-
-## 5. Strengths  
-
-Where does your system seem to work well  
-
-Prompts:  
-
-- User types for which it gives reasonable results  
-- Any patterns you think your scoring captures correctly  
-- Cases where the recommendations matched your intuition  
-- The model does pretty well at finding songs where the mood and genres match. This makes sense as those are given most weight and would increase the score of the song. This also means that if the user prefers songs of a specific mood or genre, it will likely give those songs, even if the other features like energy or valence don't match. And in one way, this is good because songs that match our mood and genre preference should be the ones that get more priority in being recommened. 
----
-
-## 6. Limitations and Bias 
-
-Where the system struggles or behaves unfairly. 
-
-Prompts:  
-
-- Features it does not consider  
-- Genres or moods that are underrepresented  
-- Cases where the system overfits to one preference  
-- Ways the scoring might unintentionally favor some users  
-- The system prioritizes genre and mood. This menans even if there is alternating in the mood/genre over the other numerical features, the system will prioritize genre/mood even if the energy might be giving conflicting information. Another limitation is the small dataset. The dataset is not diverse nor is it extensive, so even if no song is close to user preference, it will still recommend it because we need k songs. We need a diverse dataset that covers all the various possible values of features. 
----
-
-## 7. Evaluation  
-
-How you checked whether the recommender behaved as expected. 
-
-Prompts:  
-
-- Which user profiles you tested  
-- What you looked for in the recommendations  
-- What surprised you  
-- Any simple tests or comparisons you ran  
-- No need for numeric metrics unless you created some.
-- I tested basic profiles like High-Energy Pop and Chill-Lofi, which resulted in highly scored songs. This is because the genres/moods matched, and the other values were also very similar. The other thing I tested was high-energy moody using high energy and high valence while being sad/moody. And still it gives me moody songs because the genre/moods match, despite the varying similarity in the valence/energy. For Jazz, but Loud profile with high energy, we got songs that mary both genre and mood, ignoring how dissimilar the energy and tempo are. 
----
-
-## 8. Future Work  
-
-Ideas for how you would improve the model next.  
-
-Prompts:  
-
-- Additional features or preferences  
-- Better ways to explain recommendations  
-- Improving diversity among the top results  
-- Handling more complex user tastes  
-- One limitation is the small dataset. The dataset is not diverse nor is it extensive, so even if no song is close to user preference, it will still recommend it because we need k songs. We need a diverse dataset that covers all the various possible values of features. We could also include the collaborative user interaction data (like likes, comments, shares) to find others who played songs with similar taste. This could better improve our song recommendations. 
+Finally, the system does not consider lyrics, language, or cultural context at all. A user asking for "upbeat summer music" might get results in a language they do not understand, with no way for the system to know that matters to them.
 
 ---
 
-## 9. Personal Reflection  
+## Could This Be Misused?
 
-A few sentences about your experience.  
+The most realistic misuse risk is manipulation of recommendations for commercial benefit — for example, if an artist or label learned how the scoring works, they could craft song metadata to score highly for common user profiles regardless of actual fit. This is a known problem in real streaming platforms called "metadata gaming."
 
-Prompts:  
+A subtler risk is over-reliance. If a user trusts the system's explanations as objective truth rather than LLM-generated plausibility, they may assume the system deeply understands their taste when it is really doing weighted math on 10 audio features. The explanations are fluent and confident, which can make them feel more authoritative than they are.
 
-- What you learned about recommender systems  
-- Something unexpected or interesting you discovered  
-- How this changed the way you think about music recommendation apps  
-- I learned about the different ways recommendor systems are developed: collaborative, content-based, or hybrid. I learned how complex these systems can get because of how many different possibilities there are with song features and the values of those features, and the need for a large and diverse dataset. I definitely think recommendation is a very complex task that utilizes many different features and lots of thorough testing and fine-tuning to improve. 
+To mitigate these risks: the scoring weights and genre matching logic are fully transparent and auditable in the codebase, explanations should be labeled as AI-generated interpretations rather than facts, and the system should never be presented as a replacement for genuine music discovery or human curation.
+
+---
+
+## What Surprised Me About Reliability
+
+The most surprising failure was how confidently the LLM returned slightly out-of-range values — things like an energy value of 1.03 or a tempo of 252 BPM. These were close enough to valid that they would have silently corrupted scores if guardrails had not been in place. The LLM was not making wild errors; it was making plausible-but-wrong outputs that are hard to catch without explicit validation.
+
+The second surprise was dataset bias. I did not expect the genre skew to be strong enough to visibly dominate results until I tested with neutral English-language prompts like "something upbeat for a workout" and got back mostly Indian pop songs. The algorithm was working exactly as designed — the data was the problem. It was a clear lesson that correctness of code does not guarantee correctness of output.
+
+---
+
+## Collaboration with AI
+
+This entire project was built in close collaboration with Claude Code, which acted as both architect and implementer across all phases — from designing the data pipeline to writing prompts, guardrails, and the Streamlit UI.
+
+**A helpful suggestion:** When I asked how to handle the fact that the same song appears in multiple genres in the dataset, Claude suggested a two-pass deduplication strategy — first by `track_id` (same recording, multiple playlists), then by `(track_name, artists)` (same song, different album entries with different IDs). This was genuinely insightful: a single-pass dedup would have missed the second case, and Claude anticipated the edge case before I had tested for it.
+
+**A flawed suggestion:** Early on, Claude set up the intra-package imports as relative imports (e.g. `from .logger import log_event`) — which is technically correct for a package. However, this broke the workflow of running files directly with `python3 src/main.py`, which is how I preferred to test during development. Claude initially presented relative imports as the clean solution without flagging the tradeoff, and it took a separate conversation to surface that `python -m src.main` is required when relative imports are used. The fix existed, but the tradeoff should have been stated upfront.

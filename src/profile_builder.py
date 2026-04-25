@@ -241,10 +241,13 @@ Genres of the user's example songs: {genre_summary}
 For favorite_genre: if the user's description explicitly mentions a genre they prefer, use that.
 Otherwise choose from the genres of their example songs listed above, preferring the most frequent one.
 
-Produce one unified profile reflecting both sources at the stated ratio.
-When setting feature_weights, combine the signal from the text description with the
-consistency signal from the songs: a feature that is both mentioned in the text and
-consistent across songs (low std) should receive a high weight.
+For each feature, apply this blending rule to BOTH the target value and the weight:
+- If BOTH sources give a signal for a feature: blend them at the stated ratio.
+  target_value = ({text_pct}/100 * text_inferred_value) + ({song_pct}/100 * song_avg_value)
+  weight = ({text_pct}/100 * text_inferred_weight) + ({song_pct}/100 * song_consistency_weight)
+- If ONLY the description mentions a feature (no meaningful song signal): use the text value and weight directly, do not dilute it.
+- If ONLY the songs provide a signal (feature not mentioned in description): use the song average and consistency weight directly, do not dilute it.
+Song consistency weight = 1 - (std / max_possible_range) for that feature, so low std = high weight.
 
 Return ONLY valid JSON matching this exact schema — no markdown, no explanation:
 {_JSON_SCHEMA}"""
