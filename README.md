@@ -3,7 +3,10 @@
 A full agentic AI system that takes a natural language description of what you want to hear, builds a structured preference profile using an LLM, matches it against a 81k+ unique song Spotify dataset, and explains why each result fits — all in a Streamlit interface.
 
 ---
+## Video Link
+![Video](https://drive.google.com/file/d/17DBkNeqCmVOSWZPECu7_IByo83TRVhJL/view?usp=sharing)
 
+---
 ## Original Project
 
 This project extends **Music Recommender Simulation** (Modules 1–3), a content-based recommender built in Python. The original system represented user taste as a hand-coded preference dictionary (genre, mood, energy, tempo, valence, danceability, acousticness) and scored songs against it using a fixed weighted formula. It ran entirely from the command line against a small 20-song CSV catalog and had no LLM integration, no natural language input, no explanation layer, and it didn't have dynamic feature and feature weight inference.
