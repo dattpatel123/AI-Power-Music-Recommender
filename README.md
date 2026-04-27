@@ -4,7 +4,7 @@ A full agentic AI system that takes a natural language description of what you w
 
 ---
 ## Video Link
-![Video](https://drive.google.com/file/d/17DBkNeqCmVOSWZPECu7_IByo83TRVhJL/view?usp=sharing)
+https://drive.google.com/file/d/17DBkNeqCmVOSWZPECu7_IByo83TRVhJL/view?usp=sharing
 
 ---
 ## Original Project
